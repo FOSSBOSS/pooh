@@ -1,16 +1,33 @@
 <?php
-// honey.php
-// Its the payload of the pot, the thing we were trying to protect.
-// Name it somethign good, fill it with nonsense. 
-// Set headers to force download
+// Create a large file full of junk
+// Set the headers to force download
 header('Content-Type: application/octet-stream');
-header('Content-Disposition: attachment; filename="honey.txt"');
-header('Content-Length: 0');
+header('Content-Disposition: attachment; filename="My_Crypto_Wallet.txt"');
 
-// Output the contents of /dev/null
-readfile('/dev/null');
-//readfile('/dev/random');
+// Open /dev/random for reading
+$randomFile = fopen('/dev/random', 'rb');
+if ($randomFile === false) {
+    die('Unable to open /dev/random');
+}
 
-// Alternatively, you can simply end the script without outputting anything
-// echo ''; // No output
+// Continuously read and output chunks of random data
+while (true) {
+    // Read a chunk of 1024 bytes from /dev/random
+    $data = fread($randomFile, 1024);
+    if ($data === false) {
+        break;
+    }
+
+    // Output the data
+    echo $data;
+
+    // Flush the output buffer to ensure the data is sent to the client immediately
+    flush();
+
+    // Sleep for a short period to prevent excessive CPU usage
+    usleep(1000);
+}
+
+// Close the file handle
+fclose($randomFile);
 ?>
