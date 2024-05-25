@@ -33,3 +33,4 @@ createSubdirectories($currentDir);
 
 // Display a message (optional)
 echo "/Yo dawg, I heard you like directories, so I put directories in your directories, so you can direct your directors while you direct your directions. ";
+?>
